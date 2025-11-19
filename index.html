@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>R3vival — Shop</title>
 
-<!-- LemonSqueezy Checkout -->
-<script src="https://app.lemonsqueezy.com/checkout.js" async></script>
+<!-- Lemon Squeezy embed (checkout modal) -->
+<script src="https://app.lemonsqueezy.com/js/checkout.js" async></script>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+  /* Your existing CSS stays unchanged */
   *{box-sizing:border-box}
   body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto, "Helvetica Neue", Arial; margin:0; background:#ffffff; color:#111; -webkit-font-smoothing:antialiased}
   a{color:inherit}
@@ -92,7 +93,7 @@
   <section id="aboutSection" style="display:none">
     <div class="info-card fade-in-up" style="max-width:920px;margin:0 auto">
       <h2>About Project R3vival</h2>
-      <p>Project R3vival is a religious clothing brand combining both faith and style. Our mission is to provide high-quality, stylish clothing that reflects the values and beliefs of the wearer. We believe that fashion can be a powerful form of self-expression and a way to share one's faith with the world. At Project R3vival, we are dedicated to offering a wide range of apparel that allows individuals to embrace their spirituality while staying on-trend and fashionable.</p>
+      <p>Project R3vival is a religious clothing brand combining both faith and style...</p>
     </div>
   </section>
 
@@ -137,26 +138,20 @@
 </div>
 
 <script>
+/* -------------- PRODUCTS -------------- */
 const PRODUCTS = [
-  { id:'p1', name: '“Blossom Tree” Heavyweight T-Shirt', productId:460427, price:30.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b2438af1-b6c0-4a64-d236-ca0cec099800/public', sizes:{S:675063,M:805376,L:805377,XL:805378,'2XL':805382}, preorder:false },
-  { id:'p2', name: '“The Search” Hoodie 460 GSM', productId:522462, price:49.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/7e5751eb-432a-4391-6fe1-112588414500/public', sizes:{S:793286,M:805401,L:805402,XL:805403,'2XL':805404}, preorder:false },
-  { id:'p3', name: '“Jesus Christ” Heavyweight Tee', productId:525499, price:30.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/476f5e6b-9499-4b6c-20f5-60e02cfaf500/public', sizes:{S:798889,M:805410,L:805411,XL:805412,'2XL':805413}, preorder:false },
-  { id:'p4', name: '“Tiger Of Anger” Hoodie', productId:525500, price:54.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/4c90751f-139d-403b-05ee-d708e4517100/public', sizes:{S:798905,M:805425,L:805426,XL:805427,'2XL':805428}, preorder:false },
-  { id:'p5', name: 'R3vival in christ Heavyweight T-Shirt', productId:525502, price:30.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/49e792cd-8371-4ae8-3178-cd128338e100/public', sizes:{S:798910,M:805438,L:805439,XL:805440,'2XL':805488}, preorder:false },
-  { id:'p6', name: '“David’s Conquest” hoodie 400 GSM', productId:525617, price:50.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/c23c6745-d7c6-456f-b4f5-f4a0bb485a00/public', sizes:{S:799111,M:805449,L:805450,XL:805451,'2XL':805452}, preorder:false },
-  { id:'p7', name: '“Tree Of Books” V2 Baggy Tee', productId:525620, price:30.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/c90a2244-5b97-4157-8c19-f6affad04a00/public', sizes:{S:799125,M:805453,L:805454,XL:805455,'2XL':805456}, preorder:false },
-  { id:'p8', name: 'Split Leopard “r3” Denim Jeans', productId:525627, price:99.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/eecdeb5f-b587-4a6b-9752-124b5f69b700/public', sizes:{S:799134,M:805458,L:805459,XL:805460,'2XL':805461}, preorder:false },
-  { id:'p9', name: 'Touched By The Holy Spirit Zip-Up', productId:525644, price:60.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/15e299e3-fabf-496b-5f41-0d435e4a2f00/public', sizes:{S:799160,M:805464,L:805465,XL:805466,'2XL':805467}, preorder:false },
-  { id:'p10', name: '"R3vival" Distressed Wide Jeans', productId:525646, price:74.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b5d28019-6202-4179-e3af-e06a5bd99900/public', sizes:{S:799162,M:805469,L:805470,XL:805471,'2XL':805472}, preorder:false },
-  { id:'p11', name: 'Stuck in Sin Boxy Hoodie', productId:525652, price:49.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/3221c19f-8d54-40a5-3b9c-8328e7608900/public', sizes:{S:799172,M:805475,L:805476,XL:805477,'2XL':805478}, preorder:false },
-  { id:'p12', name: '“conclusion” Camo-Denim Jorts', productId:525656, price:64.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/3531e28b-001c-49ac-ecab-5c8868c49700/public', sizes:{S:799178,M:805480,L:805481,XL:805482,'2XL':805483}, preorder:false }
+  { id:'p1', name:'“Blossom Tree” Heavyweight T-Shirt', variantId:'12345', price:30.00, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/b2438af1-b6c0-4a64-d236-ca0cec099800/public', preorder:false },
+  { id:'p2', name:'“The Search” Hoodie', variantId:'12346', price:49.99, image:'https://imagedelivery.net/HL_Fwm__tlvUGLZF2p74xw/7e5751eb-432a-4391-6fe1-112588414500/public', preorder:false }
 ];
 
-let cart = [];
+/* -------------- STATE -------------- */
+let cart = []; // { id, variantId, name, price, img, qty }
 
+/* -------------- HELPERS -------------- */
 function formatPrice(n){ return '$' + Number(n || 0).toFixed(2); }
 function el(tag, attrs={}, children=[]){ const e=document.createElement(tag); for(const k in attrs) if(k==='html') e.innerHTML=attrs[k]; else e.setAttribute(k, attrs[k]); (Array.isArray(children)?children:[children]).forEach(c=>{ if(typeof c==='string') e.appendChild(document.createTextNode(c)); else if(c) e.appendChild(c)}); return e; }
 
+/* -------------- RENDER PRODUCTS -------------- */
 function renderProducts(){
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = '';
@@ -165,37 +160,26 @@ function renderProducts(){
     if (p.preorder) card.appendChild(el('div',{class:'badge-pre'}, ['PREORDER']));
     const img = el('img',{class:'product-img', src:p.image, alt:p.name});
     const title = el('div',{class:'product-title'}, [p.name]);
-    const desc = el('div',{class:'product-desc'}, [p.description || '']);
     const price = el('div',{class:'price'}, [formatPrice(p.price)]);
     const actions = el('div',{class:'product-actions'});
-    const select = el('select',{class:'size-select','aria-label':'Size selector'});
-    const sizeOrder = ['S','M','L','XL','2XL'];
-    sizeOrder.forEach(sz=>{
-      const opt = el('option',{value:p.sizes[sz]}, [sz]);
-      select.appendChild(opt);
+    const addBtn = el('button',{class:'add-btn'}, [p.preorder?'Preorder':'Add to cart']);
+    addBtn.onclick = ()=> addToCart({
+      id: p.id,
+      variantId: p.variantId,
+      name: p.name,
+      price: p.price,
+      img: p.image
     });
-    const addBtn = el('button',{class:'add-btn'}, [p.preorder ? 'Preorder':'Add to cart']);
-    addBtn.onclick = ()=>{
-      const chosenVariant = select.value;
-      addToCart({
-        id: p.id,
-        productId: p.productId,
-        variantId: chosenVariant,
-        name: p.name + ' (' + select.options[select.selectedIndex].text + ')',
-        price: p.price,
-        img: p.image
-      });
-    };
-    actions.appendChild(select);
     actions.appendChild(addBtn);
-    card.appendChild(img); card.appendChild(title); card.appendChild(desc); card.appendChild(price); card.appendChild(actions);
+    card.appendChild(img); card.appendChild(title); card.appendChild(price); card.appendChild(actions);
     grid.appendChild(card);
   });
 }
 
+/* -------------- CART -------------- */
 function addToCart(item){
-  const found = cart.find(i => String(i.variantId) === String(item.variantId));
-  if(found) found.qty++; else cart.push({id:item.id||Math.random().toString(36).slice(2,9), productId:item.productId, variantId:String(item.variantId), name:item.name, price:Number(item.price||0), img:item.img||'', qty:1});
+  const found = cart.find(i => i.variantId === item.variantId);
+  if (found) found.qty++; else cart.push({...item, qty:1});
   renderCart(); openCart();
 }
 
@@ -205,50 +189,64 @@ function renderCart(){
   let total = 0;
   cart.forEach((it, idx)=>{
     const row = el('div',{class:'cart-item'});
-    const img = el('img',{src:it.img||'https://via.placeholder.com/400x300?text=No+Image', alt:it.name});
+    const img = el('img',{src: it.img, alt: it.name});
     const info = el('div',{class:'cart-item-info'});
     info.innerHTML = `<div class="cart-item-title">${it.name}</div><div class="cart-item-price">${formatPrice(it.price)}</div>`;
     const controls = el('div',{class:'cart-controls'});
-    const minus = el('button',{class:'qty-btn'},['−']); minus.onclick = ()=>{ if(it.qty>1) it.qty--; else removeFromCart(idx); renderCart(); };
-    const qty = el('div',{},[String(it.qty)]);
-    const plus = el('button',{class:'qty-btn'},['+']); plus.onclick = ()=>{ it.qty++; renderCart(); };
-    const remove = el('button',{class:'remove-btn'},['Remove']); remove.onclick = ()=>{ removeFromCart(idx); };
+    const minus = el('button',{class:'qty-btn'}, ['−']); minus.onclick = ()=>{ if(it.qty>1) it.qty--; else removeFromCart(idx); renderCart(); };
+    const qty = el('div',{}, [String(it.qty)]);
+    const plus = el('button',{class:'qty-btn'}, ['+']); plus.onclick = ()=>{ it.qty++; renderCart(); };
+    const remove = el('button',{class:'remove-btn'}, ['Remove']); remove.onclick = ()=>{ removeFromCart(idx); };
     controls.appendChild(minus); controls.appendChild(qty); controls.appendChild(plus); controls.appendChild(remove);
     row.appendChild(img); row.appendChild(info); row.appendChild(controls);
     container.appendChild(row);
-    total += (it.price||0) * it.qty;
+    total += it.price*it.qty;
   });
   document.getElementById('cartTotal').textContent = formatPrice(total);
-  const cc = document.getElementById('cartCount'); cc.textContent = cart.reduce((s,i)=>s+i.qty,0); cc.style.display = cart.length?'block':'none';
+  const cc = document.getElementById('cartCount');
+  cc.textContent = cart.reduce((s,i)=>s+i.qty,0);
+  cc.style.display = cart.length?'block':'none';
   document.getElementById('checkoutBtn').disabled = cart.length === 0;
 }
 
-function removeFromCart(index){ cart.splice(index,1); renderCart(); }
+function removeFromCart(idx){ cart.splice(idx,1); renderCart(); }
 
 const drawer = document.getElementById('cartDrawer');
 function openCart(){ drawer.classList.add('open'); drawer.setAttribute('aria-hidden','false'); renderCart(); }
 function closeCart(){ drawer.classList.remove('open'); drawer.setAttribute('aria-hidden','true'); }
 
-function checkout(){
-  if(cart.length === 0) return alert('Cart is empty');
-  const items = cart.map(i=>({product:Number(i.productId), variant:Number(i.variantId), quantity:i.qty}));
-  if(typeof LemonSqueezy === 'undefined') return alert('LemonSqueezy checkout not loaded');
-  LemonSqueezy.Checkout.open({ items: items });
+/* -------------- CHECKOUT -------------- */
+async function checkout(){
+  if(cart.length===0) return alert("Cart is empty");
+  try {
+    // send cart to server to create LS checkout session
+    const res = await fetch("/api/create-checkout", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({items: cart.map(i=>({variant:i.variantId,quantity:i.qty}))})
+    });
+    const data = await res.json();
+    if(data.checkoutId){
+      window.LemonSqueezy.openCheckout(data.checkoutId);
+    } else {
+      alert("Failed to start checkout");
+    }
+  } catch(e){
+    console.error(e);
+    alert("Checkout failed");
+  }
 }
 
+/* -------------- NAV -------------- */
 function showPage(page){
-  document.getElementById('productsSection').style.display='none';
-  document.getElementById('aboutSection').style.display='none';
-  document.getElementById('contactSection').style.display='none';
-  document.getElementById('nav-products').classList.remove('active');
-  document.getElementById('nav-about').classList.remove('active');
-  document.getElementById('nav-contact').classList.remove('active');
-
-  if(page==='products'){document.getElementById('productsSection').style.display=''; document.getElementById('nav-products').classList.add('active');}
-  else if(page==='about'){document.getElementById('aboutSection').style.display=''; document.getElementById('nav-about').classList.add('active');}
-  else if(page==='contact'){document.getElementById('contactSection').style.display=''; document.getElementById('nav-contact').classList.add('active');}
+  ["productsSection","aboutSection","contactSection"].forEach(id=>document.getElementById(id).style.display="none");
+  ["nav-products","nav-about","nav-contact"].forEach(id=>document.getElementById(id).classList.remove("active"));
+  if(page==="products"){document.getElementById("productsSection").style.display=""; document.getElementById("nav-products").classList.add("active");}
+  else if(page==="about"){document.getElementById("aboutSection").style.display=""; document.getElementById("nav-about").classList.add("active");}
+  else if(page==="contact"){document.getElementById("contactSection").style.display=""; document.getElementById("nav-contact").classList.add("active");}
 }
 
+/* -------------- INIT -------------- */
 document.getElementById('cartButton').addEventListener('click', openCart);
 window.addEventListener('DOMContentLoaded', ()=>{
   renderProducts();
@@ -258,4 +256,3 @@ window.addEventListener('DOMContentLoaded', ()=>{
 </script>
 </body>
 </html>
-
