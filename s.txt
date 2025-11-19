@@ -1,0 +1,71 @@
+async function fetchProducts(page = 1, perPage = 100) {
+    const url = `https://api.sellauth.com/v1/shops/${SHOP_ID}/products?page=${page}&perPage=${perPage}`;
+    const res = await fetch(url, {
+        headers: {
+            'Authorization': `Bearer ${API_KEY}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!res.ok) throw new Error(`Error fetching products: ${res.statusText}`);
+    return res.json();
+}
+
+// Fetch all pages of products
+async function fetchAllProducts() {
+    let all = [];
+    let page = 1;
+    let more = true;
+
+    while (more) {
+        const response = await fetchProducts(page);
+        if (!response || !response.data || response.data.length === 0) {
+            more = false;
+            break;
+        }
+        all = all.concat(response.data);
+        page++;
+    }
+    return all;
+}
+
+// Get main product image URL
+function getProductImage(product) {
+    // Single image object
+    if (product.image) {
+        if (typeof product.image === "string") return product.image;
+        if (product.image.url) return product.image.url;
+        if (product.image.src) return product.image.src;
+    }
+
+    // Images array
+    if (product.images && product.images.length > 0) {
+        for (const img of product.images) {
+            if (img.url) return img.url;
+            if (img.src) return img.src;
+        }
+    }
+
+    return "No image available";
+}
+
+// Main script
+(async () => {
+    try {
+        const products = await fetchAllProducts();
+        let csv = "Product Name,Product ID,Product Image,Variant Name,Variant ID\n";
+
+        products.forEach(prod => {
+            const mainImage = getProductImage(prod);
+            (prod.variants || []).forEach(v => {
+                const name = v.variant_name || v.name || v.option_name || v.title || "Default";
+                const id = v.id || "";
+                csv += `"${prod.name}","${prod.id}","${mainImage}","${name}","${id}"\n`;
+            });
+        });
+
+        fs.writeFileSync('sellauth_products_variants.csv', csv);
+        console.log("CSV file created: sellauth_products_variants.csv");
+    } catch (err) {
+        console.error("Error:", err);
+    }
+})();

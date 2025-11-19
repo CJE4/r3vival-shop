@@ -1,0 +1,2130 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="https://i.postimg.cc/4Nxqt4T7/Project-Name-63.png" type="image/png">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>R3vival</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #ffffff;
+      --font-main: 'Poppins', sans-serif;
+      --glow: 0 0 15px #FF69B4aa;
+    }
+
+    [data-theme="dark"] {
+      --text-color: #ffffff;
+      --link-color: #ffffff;
+      --tab-bg: #1a1a1d;
+      --tab-hover-bg: #1a1a1a;
+      --tab-active-bg: #FF69B4;
+      --tab-active-color: #000000;
+    }
+
+
+    body {
+  margin: 0;
+  background: radial-gradient(circle at top left, #0a0a12, #000000 70%),
+              linear-gradient(135deg, #000000 0%, #000214 100%);
+  background-blend-mode: screen;
+  color: var(--text-color);
+  font-family: var(--font-main);
+}
+
+ header {
+      position: relative;
+      background: url('') no-repeat center center/cover;
+      color: #FF69B4;
+      text-align: center;
+      padding: 80px 20px 120px;
+    }
+
+    header img.logo {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 80px;
+      height: auto;
+      border-radius: 10px;
+      user-select: none;
+    }
+
+    .header-text-container {
+      display: inline-block;
+      padding: 25px 45px;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 16px;
+      box-shadow: 0 0 20px #FF69B4aa;
+      user-select: none;
+      max-width: 800px;
+    }
+
+    header h1 {
+      font-size: 4.2em;
+      margin: 0;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-shadow:
+        0 0 8px #FF69B4,
+        0 0 20px #FF69B4,
+        0 0 40px #FF69B4,
+        0 0 60px #FF69B4;
+    }
+
+    header p {
+      font-size: 1.8em;
+      margin-top: 12px;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #d0ffd0;
+      text-shadow:
+        0 0 10px #7CED4A99,
+        0 0 25px #7CED4Aaa;
+    }
+
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+
+   
+    .tabs a {
+      text-decoration: none;
+      padding: 15px 30px;
+      background-color: var(--tab-bg);
+      color: var(--text-color);
+      border-radius: 5px;
+      margin: 0 10px;
+      font-weight: bold;
+      transition: background 0.3s, color 0.3s;
+      margin-top: 20px;
+      transition: background 0.3s, color 0.3s, transform 0.3s;
+    }
+
+    .tabs a:hover {
+  background-color: var(--tab-hover-bg);
+  color: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+  transform: scale(1.05);
+}
+
+
+    .tabs a.active {
+      background-color: var(--tab-active-bg);
+      color: var(--tab-active-color);
+      box-shadow: 0 0 10px var(--accent), 0 0 25px var(--accent);
+    }
+
+    .tab-content {
+      display: none;
+      padding: 40px;
+      background-color: var(--section-bg);
+      border-radius: 16px;
+      margin: 40px auto;
+      max-width: 900px;
+    }
+
+    .active-tab {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      color: var(--text-color);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+   
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+      margin-top: 40px;
+    }
+
+    #about.highlight-box {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+    .highlight-box h2 {
+      color: var(--accent);
+      text-shadow: 0 0 8px var(--accent);
+    }
+
+  </style>
+  <script>
+    // Theme toggle functionality
+    function setTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      setTheme(newTheme);
+    }
+
+    // Tab switching functionality
+    function switchTab(tabId) {
+      const tabs = document.querySelectorAll('.tab-content');
+      tabs.forEach(tab => tab.classList.remove('active-tab'));
+
+      const activeTab = document.getElementById(tabId);
+      if (activeTab) activeTab.classList.add('active-tab');
+
+      const tabButtons = document.querySelectorAll('.tabs a');
+      tabButtons.forEach(btn => btn.classList.remove('active'));
+
+      const clickedButton = Array.from(tabButtons).find(btn => btn.getAttribute('onclick')?.includes(tabId));
+      if (clickedButton) clickedButton.classList.add('active');
+    }
+
+    // Initialize theme and default tab on page load
+    window.onload = () => {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      setTheme(savedTheme);
+
+      document.getElementById('about').classList.add('active-tab');
+      const aboutTab = document.querySelector('.tabs a[onclick*="about"]');
+      if (aboutTab) {
+        aboutTab.classList.add('active');
+      }
+    };
+  </script>
+</head>
+
+<!-- Overlay Countdown Container -->
+<div id="countdownOverlay">
+  <div class="overlayContent">
+    <h1 class="countdown-glow">R3vival Merch Drop</h1>
+
+    <div class="under-construction">🚧 Coming Soon 🚧</div>
+
+    <div class="countdown">
+      <div id="days">0<span>DAYS</span></div>
+      <div id="hours">0<span>HOURS</span></div>
+      <div id="minutes">0<span>MINUTES</span></div>
+      <div id="seconds">0<span>SECONDS</span></div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Fullscreen overlay */
+#countdownOverlay {
+  position: fixed;
+  top:0; left:0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,34,0.9);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlayContent {
+  text-align: center;
+  color: #fff;
+  animation: fadeIn 1s ease;
+}
+
+h1.countdown-glow {
+  color: #00f !important; /* text color */
+  text-shadow: 0 0 1px #00f, 0 0 1px #00f, 0 0 3px #00f !important; /* neon blue glow */
+  animation: glowPulse 2s infinite alternate !important;
+}
+
+
+  @keyframes glowPulse {
+  0% { text-shadow: 0 0 8px #00f, 0 0 17px #00f, 0 0 24px #00f; }
+  100% { text-shadow: 0 0 2[]x #00f, 0 0 17px #00f, 0 0 24px #00f; }
+}
+
+.under-construction {
+  font-size: 1.5em;
+  margin-bottom: 40px;
+  text-shadow: 0 0 7px #00f, 0 0 12px #00f;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 2em;
+  flex-wrap: wrap;
+}
+
+.countdown div {
+  background: rgba(0,0,255,0.15);
+  padding: 20px 15px;
+  border-radius: 12px;
+  box-shadow: 0 0 8px #00f, 0 0 15px #00f inset;
+  min-width: 70px;
+}
+
+.countdown span {
+  display: block;
+  font-size: 0.5em;
+  margin-top: 5px;
+  color: #00f;
+}
+
+@keyframes fadeIn { from {opacity:0; transform:scale(0.95);} to{opacity:1; transform:scale(1);} }
+
+/* Dramatic Overlay Burst */
+@keyframes overlayBurst {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(3); opacity: 0; }
+}
+
+/* Particle effect container */
+.particle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  background: #ff69b4;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 10000;
+}
+</style>
+
+<script>
+const dropDate = new Date("September 29, 2025 11:22:00").getTime();
+
+// Countdown function
+const countdown = () => {
+  const now = new Date().getTime();
+  const distance = dropDate - now;
+
+  const days = Math.floor(distance / (1000*60*60*24));
+  const hours = Math.floor((distance % (1000*60*60*24)) / (1000*60*60));
+  const minutes = Math.floor((distance % (1000*60*60)) / (1000*60));
+  const seconds = Math.floor((distance % (1000*60)) / 1000);
+
+  document.getElementById("days").innerHTML = days + "<span>DAYS</span>";
+  document.getElementById("hours").innerHTML = hours + "<span>HOURS</span>";
+  document.getElementById("minutes").innerHTML = minutes + "<span>MINUTES</span>";
+  document.getElementById("seconds").innerHTML = seconds + "<span>SECONDS</span>";
+
+  if(distance <= 0){
+    clearInterval(timerInterval);
+    triggerCountdownEnd();
+  }
+};
+
+const timerInterval = setInterval(countdown, 1000);
+countdown();
+
+// Function for dramatic countdown end
+function triggerCountdownEnd(){
+  const overlay = document.getElementById("countdownOverlay");
+  overlay.style.transition = "transform 2s ease, opacity 2s ease";
+  overlay.style.transform = "scale(3)";
+  overlay.style.opacity = "0";
+
+  // Particle burst effect
+  for(let i=0; i<50; i++){
+    const particle = document.createElement("div");
+    particle.classList.add("particle");
+    document.body.appendChild(particle);
+    particle.style.left = (window.innerWidth/2) + "px";
+    particle.style.top = (window.innerHeight/2) + "px";
+
+    const angle = Math.random()*2*Math.PI;
+    const distance = 100 + Math.random()*200;
+    const x = Math.cos(angle)*distance;
+    const y = Math.sin(angle)*distance;
+
+    particle.animate([
+      { transform: 'translate(0,0)', opacity:1 },
+      { transform: `translate(${x}px,${y}px)`, opacity:0 }
+    ],{
+      duration: 2000 + Math.random()*1000,
+      easing: "ease-out",
+      fill:"forwards"
+    });
+
+    setTimeout(()=>{ particle.remove(); }, 3000);
+  }
+
+  // Remove overlay after animation
+  setTimeout(()=>{ overlay.style.display="none"; }, 2200);
+}
+</script>
+<!-- Dropped Banner -->
+<div id="countdown-banner">
+  <canvas id="particles-canvas"></canvas>
+  <div class="scroll-track" id="scroll-track">
+    <div class="countdown-item">
+      <img src="https://i.postimg.cc/4Nxqt4T7/Project-Name-63.png" alt="R3vival Logo">
+      <span class="countdown-text">🔥 DROPPED! The collection is live 🔥</span>
+      <a href="https://www.projectr3vival.com" class="drop-btn">Shop Now</a>
+      <span class="sparkle">✨</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  #countdown-banner {
+    width: 100%;
+    height: 90px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+    background: linear-gradient(270deg, #1a001a, #330033, #1a001a);
+    background-size: 600% 600%;
+    animation: gradientShift 15s ease infinite;
+  }
+
+  #particles-canvas {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .scroll-track {
+    display: flex;
+    width: max-content;
+    animation: scroll-right 20s linear infinite;
+    position: relative;
+    z-index: 1;
+  }
+
+  .countdown-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 80px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+    text-shadow: 0 0 6px #ff69b4, 0 0 12px #ff69b4;
+    animation: itemGlow 3s ease-in-out infinite alternate;
+    position: relative;
+    padding: 6px 16px;
+    border-radius: 12px;
+    backdrop-filter: blur(6px);
+  }
+
+  .countdown-item img {
+    height: 50px;
+    filter: drop-shadow(0 0 8px #ff69b4);
+    animation: logoPulse 2s infinite alternate;
+  }
+
+  .drop-btn {
+    background: #ff69b4;
+    color: #fff;
+    font-size: 0.8em;
+    padding: 6px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
+    transition: 0.2s ease;
+  }
+
+  .drop-btn:hover {
+    background: #ff69b4;
+    color: #fff;
+    box-shadow: 0 0 14px #ff69b4, 0 0 30px #ff69b4;
+  }
+
+  .sparkle {
+    font-size: 1.3em;
+    animation: sparkleAnim 1.5s infinite;
+  }
+
+  /* --- Animations --- */
+  @keyframes scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+
+  @keyframes logoPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes itemGlow {
+    0% { text-shadow: 0 0 6px #ff69b4; }
+    50% { text-shadow: 0 0 16px #ff69b4, 0 0 28px #ff69b4; }
+    100% { text-shadow: 0 0 6px #ff69b4; }
+  }
+
+  @keyframes sparkleAnim {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2) rotate(15deg); }
+  }
+
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  @media (max-width: 600px) {
+    .countdown-item { font-size: 1em; margin-right: 30px; }
+    .countdown-item img { height: 35px; }
+    .drop-btn { font-size: 0.7em; padding: 4px 10px; }
+    .sparkle { font-size: 1em; }
+  }
+</style>
+
+<script>
+  // Duplicate the banner items so it loops smoothly
+  const scrollTrack = document.getElementById("scroll-track");
+  const firstItem = scrollTrack.children[0];
+  for (let i = 0; i < 6; i++) {
+    scrollTrack.appendChild(firstItem.cloneNode(true));
+  }
+
+  // Particle background
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let width = canvas.width = canvas.offsetWidth;
+  let height = canvas.height = canvas.offsetHeight;
+
+  const particles = [];
+  const particleCount = 60;
+
+  class Particle {
+    constructor(){
+      this.x = Math.random()*width;
+      this.y = Math.random()*height;
+      this.size = Math.random()*3 + 1;
+      this.speed = Math.random()*0.5 + 0.2;
+      this.alpha = Math.random()*0.5 + 0.3;
+    }
+    update(){
+      this.x += this.speed; // moves right
+      if(this.x > width) this.x = 0;
+    }
+    draw(){
+      ctx.fillStyle = `rgba(255,105,180, ${this.alpha})`; // stays in #ff69b4 blue
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  for(let i=0;i<particleCount;i++){
+    particles.push(new Particle());
+  }
+
+  function animateParticles(){
+    ctx.clearRect(0,0,width,height);
+    particles.forEach(p=>{
+      p.update();
+      p.draw();
+    });
+    requestAnimationFrame(animateParticles);
+  }
+  animateParticles();
+
+  window.addEventListener('resize', ()=> {
+    width = canvas.width = canvas.offsetWidth;
+    height = canvas.height = canvas.offsetHeight;
+  });
+</script>
+
+<!-- Header Section -->
+<header>
+  <div class="header-text-container" style="text-align:center; padding: 30px;">
+    
+    <h1 style="color:#fff; font-size:4em; text-shadow:0 0 30px #FF69B4;">R3vival</h1>
+
+    <a href="#home">
+      <img src="https://i.postimg.cc/4Nxqt4T7/Project-Name-63.png" 
+           alt="R3vival Logo" 
+           style="max-width:300px; filter: drop-shadow(0 0 12px #FF69B4); margin: 20px 0;">
+    </a>
+  </p>
+  <a href="https://www.projectr3vival.com" target="_blank"
+     style="display:inline-block; margin-top:15px; padding:12px 30px;
+            font-size:1.3em; color:#000; background: #FF69B4;
+            border-radius:10px; text-decoration:none; font-weight:bold;
+            box-shadow:0 0 15px #FF69B4, 0 0 30px #FF69B4, 0 0 45px #FF69B4;
+            transition: all 0.3s ease;">
+    Order Now
+  </a>
+</section>
+
+<style>
+  #preorder-countdown a:hover {
+    box-shadow: 0 0 25px #FF69B4, 0 0 50px #FF69B4, 0 0 75px #FF69B4;
+    transform: scale(1.05);
+  }
+</style>
+
+
+  </div>
+ 
+</header>
+
+<style>
+  .button-group {
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #FF69B4;
+    color: #ffffff;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 12px rgba(255,105,180,1.4);
+    animation: buttonPulse 3s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @keyframes buttonPulse {
+    0% { box-shadow: 0 0 12px rgba(255,105,180,.9); }
+    50% { box-shadow: 0 0 22px rgba(255,105,180,1.5); }
+    100% { box-shadow: 0 0 12px rgba(255,105,180,.9); }
+  }
+
+  .button span {
+    position: relative;
+    z-index: 1;
+    color: #ffffff;
+    text-shadow: 0 0 4px rgba(255,105,180,1.4);
+  }
+
+  .button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255,105,180,.1.5);
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 2em; }
+    .button { width: 100%; justify-content: center; }
+  }
+</style>
+
+
+  <div class="tabs">
+    <a href="javascript:void(0);" class="tab active" onclick="switchTab('about')">About Us</a>
+    <a href="javascript:void(0);" class="tab" onclick="switchTab('socials')">Socials</a>
+    <a href="javascript:void(0);" class="tab" onclick="switchTab('shop')">Shop</a>
+    <a href="javascript:void(0);" class="tab" onclick="switchTab('prices')">Prices</a>
+    <a href="javascript:void(0);" class="tab" onclick="switchTab('contact')">Contact</a>
+  </div>
+
+<div id="about" class="tab-content active-tab">
+  <style>
+    body {
+      background-color: #111;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .about-container {
+      position: relative;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 40px;
+      background: linear-gradient(135deg, #000011, #000022);
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,105,180,.9);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .about-container.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Animated background lines */
+    .about-container::after {
+      content: '';
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,105,180,.08),
+        rgba(255,105,180,.08) 2px,
+        transparent 2px,
+        transparent 10px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: slideBG 10s linear infinite;
+    }
+
+    @keyframes slideBG {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
+    }
+
+    .about-container > * { position: relative; z-index: 1; }
+
+    /* Base animation styles */
+    .animate-item {
+      opacity: 0;
+      transform: translateY(25px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .animate-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Headings */
+    .about-container h2 {
+      text-align: center;
+      color: #F6B;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px rgba(255,105,180,.9);
+    }
+
+    .about-container h3 {
+      color: #ffffff;
+      font-size: 1.6em;
+      margin: 20px 0 10px;
+    }
+
+    /* Mission highlight */
+    .mission-highlight {
+      background: rgba(255,105,180,0.5);
+      border-left: 4px solid #F6B;
+      padding: 12px 16px;
+      margin: 15px 0;
+      color: #fff;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(255,105,180,.9);
+    }
+
+    /* Quote glow */
+    .highlight-quote {
+      text-align: center;
+      font-style: italic;
+      font-size: 1.2em;
+      color: #fff;
+      margin: 20px 0;
+      text-shadow: 0 0 10px rgba(255,105,180,.9);
+      animation: quoteGlow 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes quoteGlow {
+      0% { text-shadow: 0 0 8px #F6B; }
+      100% { text-shadow: 0 0 18px #F6B; }
+    }
+
+    .about-container p, .about-container li {
+      color: #fff;
+      font-size: 1.1em;
+      line-height: 1.6em;
+      margin-bottom: 12px;
+    }
+
+    .about-container ul {
+      padding-left: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Hover glow for list items */
+    .about-container li {
+      transition: color 0.3s ease, text-shadow 0.3s ease;
+    }
+
+    .about-container li:hover {
+      color: #F6B;
+      text-shadow: 0 0 8px #F6B;
+    }
+
+    /* Animated HR */
+    .about-container hr {
+      border: none;
+      border-top: 2px solid #F6B;
+      margin: 20px 0;
+      width: 0;
+      transition: width 1s ease;
+    }
+
+    .about-container hr.show {
+      width: 100%;
+    }
+
+    /* Links */
+    .about-container a {
+      color: #F6B;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .about-container a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background: #F6B;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .about-container a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    /* Button */
+    .button-group {
+      text-align: center;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #F6B;
+      color: #fff;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(255,105,180,1.4);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: scale(0.9);
+      margin: 5px 0;
+    }
+
+    .button.show {
+      opacity: 1;
+      transform: scale(1);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .button span {
+      position: relative;
+      z-index: 1;
+      color: #fff;
+      text-shadow: 0 0 4px rgba(255,105,180,1.4);
+    }
+
+    .button:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 18px rgba(255,105,180,1.5);
+    }
+
+    .button img.button-logo {
+      max-width: 40px;
+      margin-right: 12px;
+      transition: transform 0.3s ease;
+    }
+
+    .button:hover img.button-logo {
+      transform: rotate(10deg) scale(1.1);
+    }
+
+    /* MOBILE RESPONSIVE */
+    @media (max-width: 768px) {
+      .about-container {
+        padding: 25px 20px;
+      }
+
+      .about-container h2 {
+        font-size: 1.8em;
+      }
+
+      .about-container h3 {
+        font-size: 1.4em;
+      }
+
+      .about-container p, .about-container li {
+        font-size: 1em;
+      }
+
+      .mission-highlight {
+        font-size: 1.1em;
+        padding: 10px 14px;
+      }
+
+      .highlight-quote {
+        font-size: 1em;
+      }
+
+      .button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .about-container {
+        padding: 20px 15px;
+      }
+
+      .about-container h2 {
+        font-size: 1.6em;
+      }
+
+      .about-container h3 {
+        font-size: 1.2em;
+      }
+
+      .about-container p, .about-container li {
+        font-size: 0.95em;
+      }
+
+      .mission-highlight {
+        font-size: 1em;
+        padding: 8px 12px;
+      }
+
+      .highlight-quote {
+        font-size: 0.95em;
+      }
+    }
+  </style>
+
+  <div class="about-container">
+    <h2 class="animate-item">Welcome to R3vival</h2>
+    <h2 class="animate-item">👥 About R3vival</h2>
+    <p class="animate-item">Project <strong>R3vival</strong>: Faith, Community, and Quality Apparel</p>
+
+    <!-- Mission Highlight -->
+    <div class="mission-highlight animate-item">
+      Our mission: To inspire faith through fashion and build a strong, supportive community.
+    </div>
+
+    <hr class="animate-item">
+
+    <h3 class="animate-item">🌐 Who We Are</h3>
+    <p class="animate-item">Project R3vival is a Christian clothing brand offering high-quality sweat suits, shirts, and other apparel designed to reflect faith and foster community.</p>
+    <ul>
+      <li class="animate-item">✔️ Stylish Clothing</li>
+      <li class="animate-item">✔️ Showcase Christian values</li>
+      <li class="animate-item">✔️ Focused on quality, professionalism, and personalization</li>
+    </ul>
+
+    <hr class="animate-item">
+
+    <h3 class="animate-item">Community Connection</h3>
+    <ul>
+      <li class="animate-item">The brand aims to build a community where individuals can connect, share their faith journeys, and find encouragement.</li>
+      <li class="animate-item">The clothing combines purposeful messages with modern fashion, blending scripture and Christian principles without being overly loud. Wearing Project R3vival apparel can spark conversations about faith and empower individuals to live out their beliefs boldly.</li>
+    </ul>
+
+    <hr class="animate-item">
+
+    <h3 class="animate-item">Why Choose R3vival?</h3>
+    <ul>
+      <li class="animate-item">🔧 Full custom shirts/hoodies – designed from scratch</li>
+      <li class="animate-item">Incredibly comfortable shirts/hoodies</li>
+      <li class="animate-item">💬 Active support and professional service</li>
+    </ul>
+
+    <p class="animate-item">Whether you're new to a style or a growing brand, R3vival has clothes tailored to your ideas.</p>
+
+    <!-- Quote -->
+    <p class="highlight-quote animate-item">“Let your light shine before others.” – Matthew 5:16</p>
+
+    <p class="animate-item"><strong>📩 Questions? Need help? Contact us at 
+      <a href="mailto:r3vivalapparel@gmail.com" target="_blank">r3vivalapparel@gmail.com</a>
+    </strong> or message us on one of our socials.</p>
+
+    <div class="button-group">
+      <a href="https://www.projectr3vival.com" 
+         class="button animate-item" 
+         target="_blank" 
+         rel="noopener noreferrer">
+        <img src="https://i.postimg.cc/4Nxqt4T7/Project-Name-63.png" 
+             alt="Logo" 
+             class="button-logo" />
+        <span>Shop Here</span>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const aboutSection = document.querySelector('.about-container');
+    const animateItems = document.querySelectorAll('.about-container .animate-item, .about-container .button, .about-container hr');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          aboutSection.classList.add('animate');
+          animateItems.forEach((item, index) => {
+            setTimeout(() => { item.classList.add('show'); }, index * 150);
+          });
+        } else {
+          aboutSection.classList.remove('animate');
+          animateItems.forEach(item => item.classList.remove('show'));
+        }
+      });
+    }, { threshold: 0.2 });
+
+    observer.observe(aboutSection);
+  </script>
+</div>
+
+
+<div id="socials" class="tab-content">
+  <style>
+    body {
+      background-color: #111;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .socials-container {
+      position: relative;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background: linear-gradient(135deg, #000011, #000022); /* Matches About tab */
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,105,180,.9);
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Subtle moving background lines like About tab */
+    .socials-container::after {
+      content: '';
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,105,180,.08),
+        rgba(255,105,180,.08) 2px,
+        transparent 2px,
+        transparent 10px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: slideBG 10s linear infinite;
+    }
+
+    @keyframes slideBG {
+      0% { background-position: 0 0; }
+      100% { background-position: 100px 100px; }
+    }
+
+    .socials-container > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Section headings */
+    .socials-container h2 {
+      color: #FF69B4;
+      font-size: 2.2em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 8px rgba(255,105,180,.9);
+    }
+
+    /* Social image */
+    .socials-container img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      border: 3px solid #FF69B4;
+      box-shadow: 0 0 20px #FF69B4;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .socials-container img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px #FF69B4;
+    }
+
+    /* Social links */
+    .socials-container p {
+      color: #ffffff;
+      font-size: 1.1em;
+      margin: 15px 0;
+    }
+
+    .socials-container a {
+      color: #FF69B4;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    .socials-container a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background: #FF69B4;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.3s ease;
+    }
+
+    .socials-container a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    @media (max-width: 600px) {
+      .socials-container {
+        padding: 25px;
+      }
+    }
+  </style>
+
+  <div class="socials-container">
+    <h2>👥 Follow Our Socials</h2>
+
+    <img src="https://i.postimg.cc/T1HcqppY/Chat-GPT-Image-Sep-27-2025-08-50-40-AM.png"
+         alt="Socials Image" />
+
+    <p>📩 Follow our TikTok page! 
+      <a href="https://www.tiktok.com/@projectr3vival" target="_blank">@projectr3vival</a>
+    </p>
+
+    <p>📩 Follow our Instagram page! 
+      <a href="https://www.instagram.com/r3vivalapparel?igsh=aGJucWkzYXlveGl5" target="_blank">@r3vivalapparel</a>
+    </p>
+    <p>📩 Join our Discord! 
+      <a href="https://discord.gg/keq3hJbtJB" target="_blank">@R3vival Discord</a>
+    </p>
+  </div>
+</div>
+
+<div id="shop" class="tab-content highlight-box">
+<h1 class="shop-title">Shop</h1>
+
+<!-- NOTIFY ME SECTION -->
+  <div class="notify-section" style="text-align:center; margin-bottom:30px; position: relative; z-index:1;">
+    <p style="margin-top: 20px; font-size: 1.2em; font-weight: 500; color: #fff; text-shadow: 0 0 5px #ff69b4;">
+      🔥 Don't miss the next drop! Enter your email for early access.
+    </p>
+
+    <form id="notifyFormProducts" class="notify-form" action="https://formspree.io/f/xandrjkk" method="POST" style="margin-top:10px;">
+      <input type="email" name="email" id="notifyEmailProducts" placeholder="Enter your email" required
+             style="padding:10px 15px; border-radius:8px; border:2px solid #ff69b4; width:250px; max-width:80%; font-size:1em;">
+      <button type="submit" class="notify-button"
+              style="padding:10px 20px; margin-left:10px; border-radius:8px; border:none; font-weight:bold; color:#000; background: linear-gradient(90deg,#ff69b4,#ff69b4); box-shadow:0 0 5px #ff69b4; cursor:pointer; transition:box-shadow 0.3s ease, transform 0.3s ease;">
+        Notify Me
+      </button>
+    </form>
+    <p id="notifyMessageProducts" style="margin-top:10px; color:#fff; font-weight:500;"></p>
+  </div>
+
+   <!-- ===== SEARCH BAR ===== -->
+  <input type="text" id="searchBar" placeholder="Search item">
+
+  <!-- ===== FILTER TOGGLE ===== -->
+  <div id="filterToggle">Filters ▼</div>
+
+  <!-- ===== FILTER PANEL ===== -->
+  <div id="filterPanel">
+    <label><input type="checkbox" value="drop1"> Drop 1</label>
+    <label><input type="checkbox" value="pink"> Pink Edition</label>
+    <label><input type="checkbox" value="cross"> Cross Edition</label>
+    <label><input type="checkbox" value="shirts"> Shirts</label>
+    <!---
+    <label><input type="checkbox" value="coming-soon"> Coming Soon</label>
+    <label><input type="checkbox" value="sweat-suits"> SweatSuits</label>
+    <label><input type="checkbox" value="drop2"> Drop 2</label>
+  -->
+  </div>
+
+  <!-- ===== FILTER INFO ===== -->
+  <div class="filter-info" id="filterInfo">
+    Showing <span id="resultCount">0</span> items
+  </div>
+<style>
+/* ===== SHOP TITLE ===== */
+.shop-title {
+  text-align: center;
+  color: #ff69b4;
+  font-size: 3em;
+  font-weight: bold;
+  padding: 20px 0;
+  text-shadow: 0 0 15px #ff69b4, 0 0 30px rgba(255,105,180,0.5);
+  animation: glowTitle 2s infinite alternate;
+}
+
+/* ===== SEARCH BAR ===== */
+#searchBar {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 2px solid #ff69b4;
+  width: 250px;
+  background: #111;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 0 12px #ff69b4, 0 0 20px rgba(255,105,180,0.3);
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+#searchBar::placeholder {
+  color: #ff69b4;
+  font-weight: bold;
+}
+#searchBar:focus {
+  outline: none;
+  box-shadow: 0 0 25px #ff69b4, 0 0 50px rgba(0,255,255,0.5);
+  border-color: #ff69b4;
+}
+
+/* ===== FILTER TOGGLE ===== */
+#filterToggle {
+  display: inline-block;
+  background: #111;
+  border: 2px solid #ff69b4;
+  color: #ff69b4;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 10px;
+  transition: all 0.3s ease;
+}
+#filterToggle:hover {
+  background: #ff69b4;
+  color: #fff;
+  box-shadow: 0 0 25px #ff69b4, 0 0 50px rgba(255,105,180,0.5);
+}
+
+/* ===== FILTER PANEL ===== */
+#filterPanel {
+  display: none;
+  background: #111;
+  padding: 15px;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  animation: slideDown 0.4s ease forwards;
+}
+#filterPanel label {
+  display: inline-block;
+  margin-right: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ff69b4;
+  transition: all 0.3s ease;
+}
+#filterPanel label:hover {
+  color: #ff69b4;
+  text-shadow: 0 0 5px #ff69b4;
+}
+
+/* ===== FILTER INFO ===== */
+.filter-info {
+  color: #ff69b4;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px #ff69b4;
+}
+
+/* ===== PRODUCT GRID ===== */
+.shop-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+}
+
+/* ===== PRODUCT CARD ===== */
+.product-card {
+  background: #222;
+  border-radius: 12px;
+  text-align: center;
+  padding: 15px;
+  border: 2px solid #ff69b4;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInCard 0.5s forwards;
+}
+.product-title {
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px #ff69b4;
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes glowTitle {
+  from { text-shadow: 0 0 15px #ff69b4, 0 0 30px rgba(255,105,180,0.5); }
+  to { text-shadow: 0 0 25px #ff69b4, 0 0 50px rgba(255,105,180,0.7); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInCard {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+// Toggle filter panel
+document.getElementById("filterToggle").addEventListener("click", () => {
+  const panel = document.getElementById("filterPanel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+});
+
+// Update visible products and count
+function updateProducts() {
+  const searchValue = document.getElementById("searchBar").value.toLowerCase();
+  const checkboxes = Array.from(document.querySelectorAll("#filterPanel input:checked")).map(cb => cb.value);
+  let count = 0;
+
+  document.querySelectorAll(".product-card").forEach(card => {
+    const title = card.querySelector(".product-title").innerText.toLowerCase();
+    const category = card.dataset.category;
+
+    const matchesSearch = title.includes(searchValue);
+    const matchesFilter = checkboxes.length === 0 || checkboxes.some(f => category.includes(f));
+
+    if (matchesSearch && matchesFilter) {
+      card.style.display = "block";
+      count++;
+      card.style.animation = "fadeInCard 0.5s forwards";
+    } else {
+      card.style.display = "none";
+    }
+  });
+
+  document.getElementById("resultCount").innerText = count;
+}
+
+// Event listeners
+document.getElementById("searchBar").addEventListener("input", updateProducts);
+document.querySelectorAll("#filterPanel input").forEach(cb => cb.addEventListener("change", updateProducts));
+
+// Initialize count
+updateProducts();
+</script>
+
+  <!-- ===================== SHIRTS ===================== -->
+  <div class="section-title">Shirts</div>
+  <div class="shop-container">
+
+    <div class="product-card" data-category="drop1 cross shirts">
+      <span class="label best-seller">Best Seller</span>
+      <img src="https://i.postimg.cc/PJBSCTtR/Untitled-design-3.png" alt="Shirt 4">
+      <div class="product-title">Jesus Christ Heavyweight Tee</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+        <span class="tag cross">Cross Edition</span>
+      </div>
+      <div class="product-price">$30.00</div>
+      <a href="https://www.projectr3vival.com/product-page/jesus-christ-heavyweight-tee" class="buy-btn">Buy Now</a>
+    </div>
+
+    <div class="product-card" data-category="drop1 pink shirts">
+      <span class="label new-drop">New Drop</span> 
+      <img src="https://i.postimg.cc/kgnbxGjP/Untitled-design-6.png" alt="Shirt 7">
+      <div class="product-title">Heavyweight Drop Shoulder Cotton T-Shirt</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+        <span class="tag pink">Cherry Edition</span>
+      </div>
+      <div class="product-price">$30.00</div>
+      <a href="https://www.projectr3vival.com/product-page/heavyweight-drop-shoulder-cotton-t-shirt-1" class="buy-btn">Buy Now</a>
+    </div>
+
+    <div class="product-card" data-category="drop1 shirts">
+      <img src="https://i.postimg.cc/T2DgxZyF/Untitled-design-4.png" alt="Shirt 5">
+      <span class="label new-drop">New Drop</span> 
+      <div class="product-title">Heavyweight Drop Shoulder Cotton T-Shirt</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+      </div>
+      <div class="product-price">$30.00</div>
+      <a href="https://www.projectr3vival.com/product-page/heavyweight-drop-shoulder-cotton-t-shirt" class="buy-btn">Buy Now</a>
+    </div>
+<!--
+    <div class="product-card" data-category="drop1 shirts">
+      <span class="label new-drop">New Drop</span>
+      <img src="https://i.postimg.cc/Rh04Grnd/Untitled-design-7.png" alt="Shirt 2">
+      <div class="product-title">I love Jesus</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+      </div>
+      <div class="product-price">$35.99</div>
+      <a href="#" class="buy-btn">Buy Now</a>
+    </div>
+
+
+
+    <div class="product-card" data-category="drop1 shirts">
+      <img src="https://i.postimg.cc/gkbR2N8J/Untitled-design-5.png" alt="Shirt 6">
+      <div class="product-title">War is Mean</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+      </div>
+      <div class="product-price">$35.99</div>
+      <a href="#" class="buy-btn">Buy Now</a>
+    </div>
+  
+
+    <div class="product-card" data-category="drop1 cross shirts">
+      <span class="label best-seller">Best Seller</span>
+      <img src="https://i.postimg.cc/hG9Dt1BL/IMG-4907.jpg" alt="Shirt 1">
+      <div class="product-title">Black Cross</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+        <span class="tag cross">Cross edition</span>
+      </div>
+      <div class="product-price">$35.99</div>
+      <a href="#" class="buy-btn">Buy Now</a>
+    </div>
+  -->
+
+
+
+  </div>
+
+  <!-- ===================== SWEATSUITS ===================== 
+  <div class="section-title">Sweatsuits</div>
+  <div class="shop-container">
+
+    <div class="product-card" data-category="drop1 sweat-suits">
+      <img src="https://i.postimg.cc/mZ7H1MTr/Untitled-design-2.png" alt="White Set">
+      <div class="product-title">White Set</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+      </div>
+      <div class="product-price">$74.99</div>
+      <a href="#" class="buy-btn">Buy Now</a>
+    </div>
+
+    <div class="product-card" data-category="drop2 sweat-suits">
+      <img src="https://i.postimg.cc/bNTS3hDc/Untitled-design-1.png" alt="Black Set">
+      <div class="product-title">Black Set</div>
+      <div class="product-tags">
+        <span class="tag drop">Drop 1</span>
+      </div>
+      <div class="product-price">$74.99</div>
+      <a href="#" class="buy-btn">Buy Now</a>
+    </div>
+</div>
+  </div>
+-->
+
+</div>
+<style>
+
+
+
+
+/* ===== FILTER BAR ===== */
+.filter-bar {
+  text-align: center;
+  margin: 20px 0;
+}
+
+
+
+/* ===== FILTER INFO ===== */
+.filter-info {
+  text-align: center;
+  margin: 10px 0 20px 0;
+  color: #ff69b4; /* neon blue text */
+  font-weight: bold;
+  font-size: 1.5em;
+  text-shadow:
+    0 0 0px #ff69b4,
+    0 0 1px #ff69b4,
+    0 0 1px #ff69b4,
+    0 0 1px #ff69b4;
+  transition: text-shadow 0.3s ease;
+}
+
+
+
+/* ===== ACTIVE FILTER BUTTON ===== */
+.filter-btn.active {
+  background: #ff69b4; /* neon blue background */
+  color: #fff;
+  box-shadow: 0 0 1px #ff69b4, 0 0 1px #ff69b4;
+}
+
+
+/* ===== PRODUCT GRID ===== */
+.shop-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+  padding: 0 20px 50px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.product-card {
+  background: #222;
+  border-radius: 12px;
+  text-align: center;
+  padding: 15px;
+  cursor: pointer;
+  border: 2px solid #ff69b4;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s forwards;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 0 15px rgba(255,105,180,0.3);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(255,105,180,0.7), 0 0 50px rgba(255,105,180,0.4);
+}
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.product-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #fFF;
+  margin-bottom: 5px;
+  text-shadow: 0 0 10px #ff69b4;
+}
+
+
+
+/* ===== PRODUCT TAGS ===== */
+.product-tags {
+  margin: 5px 0;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.tag {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.75em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 3px #000;
+}
+.tag.drop {
+  background: #ff69b4;
+  box-shadow: 0 0 8px #ff69b4;
+}
+
+.tag.drop2 {
+  background: #DC143C;
+  box-shadow: 0 0 8px #DC143C;
+}
+.tag.pink {
+  background: #ff69b4;
+  box-shadow: 0 0 8px #ff69b4;
+}
+
+.tag.cross {
+  background: #000000;
+  box-shadow: 0 0 8px #000000;
+}
+
+.product-price {
+  font-size: 1em;
+  color: #ff69b4;
+  margin-bottom: 10px;
+  text-shadow: 0 0 8px #ff69b4;
+}
+.buy-btn {
+  display: inline-block;
+  padding: 8px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  color: #000;
+  background: linear-gradient(90deg, #ff69b4, #ff69b4);
+  transition: all 0.5s ease;
+  box-shadow: 0 0 5px #ff69b4;
+}
+.buy-btn:hover {
+  box-shadow: 0 0 25px #ff69b4, 0 0 50px #ff69b4;
+}
+
+/* ===== SECTION TITLES GLOW ===== */
+.section-title {
+  color: #ff69b4;
+  font-size:1.8em;
+  font-weight: bold;
+  margin: 20px 0 10px 0;
+  padding-left: 10px;
+  border-left: 3px solid #ff69b4;
+ text-shadow:
+    0 0 5px #ff69b4,
+    0 0 10px #ff69b4, 
+}
+
+
+
+/* ===== LABELS ===== */
+.label {
+  position: absolute;
+  top: 10px; left: 10px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.8em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 5px black;
+}
+.best-seller { background: #FFD700; color:#000; box-shadow: 0 0 10px #FFD700; }
+.new-drop   { background: #00FF00; box-shadow: 0 0 10px #00FF00; }
+.coming-soon    { background: #FF0000; box-shadow: 0 0 10px #FF0000; }
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+</style>
+
+<script>
+// ===== UPDATE RESULT COUNT =====
+function updateResultCount() {
+  const allCards = document.querySelectorAll(".product-card");
+  let visibleCount = 0;
+  allCards.forEach(card => {
+    if (card.style.display !== "none") visibleCount++;
+  });
+  document.getElementById("resultCount").innerText = visibleCount;
+}
+
+// 🔎 Search
+document.getElementById("searchBar").addEventListener("keyup", function() {
+  let value = this.value.toLowerCase();
+  document.querySelectorAll(".product-card").forEach(card => {
+    let title = card.querySelector(".product-title").innerText.toLowerCase();
+    card.style.display = title.includes(value) ? "block" : "none";
+  });
+  updateResultCount();
+});
+
+// 🎛 Filter buttons
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", function() {
+    let filter = this.dataset.filter;
+
+    // Highlight active button
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    this.classList.add("active");
+
+    // Show/hide products based on filter
+    document.querySelectorAll(".product-card").forEach(card => {
+      if (filter === "all" || card.dataset.category.includes(filter)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+
+    updateResultCount();
+  });
+});
+
+// Initialize count on page load
+updateResultCount();
+</script>
+
+
+<div id="prices" class="tab-content">
+  <style>
+    body {
+      background-color: #111;
+      font-family: "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .compare-section {
+      position: relative;
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 50px;
+      background: linear-gradient(135deg, #000011, #000022);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 0 35px rgba(255,105,180,.9);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .compare-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,105,180,.09),
+        rgba(255,105,180,.09) 2px,
+        transparent 2px,
+        transparent 12px
+      );
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .compare-section::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120%;
+      height: 120%;
+      background: radial-gradient(circle, rgba(255,105,180,.5) 0%, transparent 70%);
+      transform: translate(-50%, -50%);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .compare-section > * { position: relative; z-index: 1; }
+
+    h2 {
+      text-align: center;
+      color: #F6B;
+      font-size: 3.2em;
+      margin-bottom: 50px;
+      text-shadow: 0 0 15px #F6B, 0 0 30px rgba(255,105,180,.9), 0 0 60px rgba(255,105,180,.9);
+      animation: textGlow 2.5s ease-in-out infinite alternate;
+      letter-spacing: 2px;
+    }
+
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 6px #F6B, 0 0 20px #F6B, 0 0 40px rgba(255,105,180,.7); }
+      100% { text-shadow: 0 0 25px #F6B, 0 0 50px #F6B, 0 0 75px rgba(255,105,180,.7); }
+    }
+
+    h3 {
+      text-align: center;
+      color: #fff;
+      font-size: 2em;
+      margin: 25px 0 25px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    h3::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      margin: 10px auto 0;
+      background: #F6B;
+      border-radius: 2px;
+      animation: underlineGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes underlineGlow {
+      0% { box-shadow: 0 0 5px #F6B; }
+      100% { box-shadow: 0 0 20px #F6B; }
+    }
+
+    .prices-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+
+    .price-card {
+      background: rgba(255,105,180,.09);
+      border: 1px solid rgba(255,105,180,.7);
+      border-radius: 15px;
+      width: 45%;
+      padding: 25px;
+      box-shadow: 0 0 25px rgba(255,105,180,.1);
+      transition: box-shadow 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+      animation: fadeUp 1s ease forwards;
+    }
+
+    .price-card:hover {
+      box-shadow: 0 0 50px rgba(255,105,180,1.5), 0 0 60px rgba(255,105,180,.9) inset;
+    }
+
+    .price-card h4 {
+      text-align: center;
+      color: #F6B;
+      margin-bottom: 20px;
+      font-size: 1.8em;
+      text-shadow: 0 0 10px #F6B;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 10px;
+      border-bottom: 1px solid rgba(255,105,180,.5);
+      align-items: center;
+    }
+
+    .price-row:last-child { border-bottom: none; }
+
+    .item-name { color: #fff; font-weight: 600; }
+    .price { color: #F6B; font-weight: bold; text-align: right; }
+
+    .badge {
+      display: inline-block;
+      background: #F6B;
+      color: #fff;
+      font-size: 0.8em;
+      font-weight: bold;
+      padding: 3px 6px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      margin-left: 5px;
+      box-shadow: 0 0 12px #F6B;
+      animation: badgeGlow 2s ease-in-out infinite alternate;
+    }
+
+    /* Glowing badge animation */
+    @keyframes badgeGlow {
+      0% { box-shadow: 0 0 6px #F6B; }
+      50% { box-shadow: 0 0 20px #F6B, 0 0 40px rgba(255,105,180,.9); }
+      100% { box-shadow: 0 0 6px #F6B; }
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive tweaks for mobile readability */
+    @media (max-width: 768px) {
+      .price-card { width: 100%; }
+      h2 { font-size: 2.5em; }
+      h3 { font-size: 2.2em; }
+      .price-card h4 { font-size: 2em; }
+      .badge { font-size: 0.95em; padding: 4px 8px; }
+    }
+
+    @media (max-width: 480px) {
+      h2 { font-size: 2.2em; }
+      h3 { font-size: 2em; }
+      .price-card h4 { font-size: 1.8em; }
+      .badge { font-size: 1em; padding: 5px 10px; }
+    }
+  </style>
+
+  <div class="compare-section">
+    <h2>R3vival Prices</h2>
+
+    <h3>Shirts</h3>
+    <div class="prices-grid">
+      <div class="price-card">
+        <h4>R3vival</h4>
+        <div class="price-row"><span class="item-name">100% Cotton <span class="badge">Best Value</span></span> <span class="price">$30.00</span></div>
+        <div class="price-row"><span class="item-name">Polyester</span> <span class="price">$45.00</span></div>
+        <div class="price-row"><span class="item-name">Cotton/Polyester Mix</span> <span class="price">$42.00</span></div>
+      </div>
+      <div class="price-card">
+        <h4>Custom</h4>
+        <div class="price-row"><span class="item-name">100% Cotton</span> <span class="price">$50.00</span></div>
+        <div class="price-row"><span class="item-name">Polyester</span> <span class="price">$55.00</span></div>
+        <div class="price-row"><span class="item-name">Cotton/Polyester Mix</span> <span class="price">$50.00</span></div>
+      </div>
+    </div>
+
+    <h3>Hoodies</h3>
+    <div class="prices-grid">
+      <div class="price-card">
+        <h4>R3vival</h4>
+        <div class="price-row"><span class="item-name">100% Cotton <span class="badge">Best Value</span></span> <span class="price">$49.00</span></div>
+        <div class="price-row"><span class="item-name">Cotton/Polyester Mix</span> <span class="price">$54.00</span></div>
+      </div>
+      <div class="price-card">
+        <h4>Custom</h4>
+        <div class="price-row"><span class="item-name">100% Cotton</span> <span class="price">$69.00</span></div>
+        <div class="price-row"><span class="item-name">Cotton/Polyester Mix</span> <span class="price">$69.00</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="tab-content highlight-box">
+  <style>
+    body {
+      background-color: #111;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .contact-container {
+      position: relative;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 40px;
+      background: linear-gradient(135deg, #000011, #000022);
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255,105,180,.1);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease, box-shadow 1s ease-in-out;
+    }
+
+    .contact-container.animate {
+      opacity: 1;
+      transform: translateY(0);
+      box-shadow: 0 0 35px rgba(255,105,180,1.2);
+    }
+
+    /* Background diagonal lines */
+    .contact-container::after {
+      content: '';
+      position: absolute;
+      top:0; left:0;
+      width:100%; height:100%;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255,105,180,.08),
+        rgba(255,105,180,.08) 2px,
+        transparent 2px,
+        transparent 12px
+      );
+      z-index: 0;
+      pointer-events: none;
+      animation: slideBG 15s linear infinite;
+    }
+
+    @keyframes slideBG {
+      0% { background-position: 0 0; }
+      100% { background-position: 150px 150px; }
+    }
+
+    .contact-container > * { position: relative; z-index: 1; }
+
+    /* Header */
+    .contact-header img {
+      display: block;
+      margin: 0 auto 20px auto;
+      max-width: 200px;
+      filter: drop-shadow(0 0 12px #FF69B4);
+      transition: transform 0.3s ease;
+    }
+    .contact-header img:hover { transform: scale(1.05); }
+
+    .contact-container h2 {
+      text-align: center;
+      color: #FF69B4;
+      font-size: 2.2em;
+      margin-bottom: 25px;
+      text-shadow: 0 0 8px rgba(255,105,180,.9);
+      animation: textGlow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes textGlow {
+      0% { text-shadow: 0 0 6px #FF69B4; }
+      100% { text-shadow: 0 0 15px #FF69B4; }
+    }
+
+    /* Form styling */
+    .contact-form .form-group { position: relative; margin-top: 20px; }
+    .contact-form label {
+      font-weight: bold;
+      display: block;
+      color: #fff;
+      margin-bottom: 6px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+    }
+    .contact-form label.show { opacity:1; transform: translateY(0); }
+
+    .contact-form .icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #FF69B4;
+      pointer-events: none;
+      font-size: 18px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 14px 14px 14px 45px;
+      border-radius: 10px;
+      border: 1px solid #FF69B4;
+      background: #1a1a2e;
+      color: #fff;
+      font-size: 16px;
+      transition: all 0.3s ease, box-shadow 0.5s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      box-sizing: border-box;
+    }
+    .contact-form input.show, .contact-form textarea.show { opacity: 1; transform: translateY(0); }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      box-shadow: 0 0 12px rgba(255,105,180,1.4);
+      border-color: #FF69B4;
+    }
+
+    /* Submit button */
+    .contact-form button {
+      margin-top: 20px;
+      background: #FF69B4;
+      color: #fff;
+      border: none;
+      padding: 14px;
+      width: 100%;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(255,105,180,1.4);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .contact-form button.show { opacity: 1; transform: translateY(0); }
+
+    .contact-form button:hover { transform: scale(1.03); box-shadow: 0 0 25px rgba(255,105,180,.1.5); }
+    .contact-form button::before {
+      content: '';
+      position: absolute;
+      top:0; left:-100%;
+      width:100%; height:100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 100%);
+      transform: skewX(-20deg);
+      pointer-events: none;
+      animation: shimmer 3s infinite;
+    }
+    @keyframes shimmer { 0%{left:-100%;} 100%{left:100%;} }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .contact-container { padding: 25px 15px; }
+      .contact-container h2 { font-size: 1.8em; }
+      .contact-form input, .contact-form textarea, .contact-form button { font-size: 16px; padding:12px; }
+      .contact-form .icon { font-size:16px; left:10px; }
+    }
+  </style>
+
+  <div class="contact-container">
+    <header class="contact-header">
+      <a href="#home">
+        <img src="https://i.postimg.cc/4Nxqt4T7/Project-Name-63.png" alt="R3vival Logo">
+      </a>
+    </header>
+
+    <h2>Contact R3vival Support</h2>
+
+    <form class="contact-form" action="https://formspree.io/f/mkgvdbwq" method="POST">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <span class="icon">👤</span>
+        <input type="text" name="name" id="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Your Email</label>
+        <span class="icon">📧</span>
+        <input type="email" name="email" id="email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <span class="icon">💬</span>
+        <textarea name="message" id="message" required style="height:120px; resize:vertical;"></textarea>
+      </div>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const contactSection = document.querySelector('.contact-container');
+      const animateItems = contactSection.querySelectorAll('h2, label, input, textarea, button');
+
+      if('IntersectionObserver' in window){
+        const observer = new IntersectionObserver(entries=>{
+          entries.forEach(entry=>{
+            if(entry.isIntersecting){
+              contactSection.classList.add('animate');
+              animateItems.forEach((item,i)=>{
+                setTimeout(()=>{ item.classList.add('show'); }, i*120);
+              });
+            } else {
+              contactSection.classList.remove('animate');
+              animateItems.forEach(item=>item.classList.remove('show'));
+            }
+          });
+        },{threshold:0.2});
+        observer.observe(contactSection);
+      } else {
+        contactSection.classList.add('animate');
+        animateItems.forEach(item=>item.classList.add('show'));
+      }
+    });
+  </script>
+</div>
+
+  <footer>
+    © 2025 R3vival
+  </footer>
+</body>
+
+</html>
+</body>
