@@ -11,57 +11,51 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const SHOP_ID = process.env.SHOP_ID;
-const SELLAUTH_KEY = process.env.SELLAUTH_PRIVATE_KEY;
+const LEMON_API_KEY = process.env.LEMON_API_KEY;
+const CLOUDFLARE_HASH = "HL_Fwm__tlvUGLZF2p74xw"; // your hash if still using Cloudflare images
 
-const CLOUDFLARE_HASH = "HL_Fwm__tlvUGLZF2p74xw"; // your hash
-
-if (!SHOP_ID || !SELLAUTH_KEY) {
-  console.error("Missing SHOP_ID or SELLAUTH_PRIVATE_KEY in .env");
+if (!LEMON_API_KEY) {
+  console.error("Missing LEMON_API_KEY in .env");
   process.exit(1);
 }
 
-const SELLAUTH_API_BASE = "https://api.sellauth.com/v1";
+const LS_API_BASE = "https://api.lemonsqueezy.com/v1";
 
 /**
- * Fetch product + variant from SellAuth and normalize
+ * Fetch product + variant from Lemon Squeezy and normalize
  */
-async function fetchProduct(productId, variantId) {
-  const url = `${SELLAUTH_API_BASE}/products/${productId}`;
+async function fetchLSProduct(productId, variantId) {
+  const url = `${LS_API_BASE}/products/${productId}`;
   const resp = await axios.get(url, {
     headers: {
-      Authorization: `Bearer ${SELLAUTH_KEY}`,
+      Authorization: `Bearer ${LEMON_API_KEY}`,
       "Content-Type": "application/json",
     },
     timeout: 12000,
   });
 
-  const product = resp.data;
+  const product = resp.data.data;
+  const variant = product.attributes.variants.find(v => String(v.id) === String(variantId)) || product.attributes.variants[0];
 
-  let variant = null;
-  if (Array.isArray(product.variants)) {
-    variant = product.variants.find(v => String(v.id) === String(variantId)) || product.variants[0];
+  // handle image URL (if using Cloudflare, otherwise use LS hosted)
+  let imageUrl = null;
+  if (variant.attributes.image_url) {
+    imageUrl = variant.attributes.image_url;
+  } else if (product.attributes.images?.length) {
+    imageUrl = product.attributes.images[0].attributes.url;
   }
-
-  let imageObj = null;
-  if (product.image) imageObj = product.image;
-  else if (product.images?.length) imageObj = product.images[0];
-  else if (product.media?.length) imageObj = product.media[0];
-
-  const cloudflareId = imageObj?.cloudflare_image_id ?? imageObj?.cloudflare_id ?? null;
-  const imageUrl = cloudflareId ? `https://imagedelivery.net/${CLOUDFLARE_HASH}/${cloudflareId}/public` : (imageObj?.url || null);
 
   return {
     id: String(productId),
     variantId: String(variantId),
-    name: product.name ?? product.title ?? `Product ${productId}`,
-    price: variant?.price ?? product.price ?? null,
+    name: product.attributes.name ?? `Product ${productId}`,
+    price: variant?.attributes.price ?? product.attributes.price ?? null,
     image: {
       url: imageUrl,
-      cloudflare_image_id: cloudflareId,
-      raw: imageObj ?? null
+      cloudflare_image_id: null,
+      raw: variant ?? product ?? null
     },
-    description: product.description ?? "",
+    description: product.attributes.description ?? "",
     raw: product
   };
 }
@@ -69,7 +63,7 @@ async function fetchProduct(productId, variantId) {
 app.get("/api/product/:productId/:variantId", async (req, res) => {
   const { productId, variantId } = req.params;
   try {
-    const product = await fetchProduct(productId, variantId);
+    const product = await fetchLSProduct(productId, variantId);
     res.json(product);
   } catch (err) {
     console.error("Fetch product error:", err?.response?.data || err.message || err);
@@ -87,7 +81,7 @@ app.get("/api/products", async (req, res) => {
   for (const p of pairs) {
     const [pid, vid] = p.split(":").map(x => x.trim());
     try {
-      const product = await fetchProduct(pid, vid);
+      const product = await fetchLSProduct(pid, vid);
       out.push(product);
     } catch (e) {
       out.push({ id: pid, variantId: vid, error: true, message: e?.message || "fetch error" });
@@ -96,7 +90,7 @@ app.get("/api/products", async (req, res) => {
   res.json(out);
 });
 
-app.get("/", (req, res) => res.send("SellAuth proxy running"));
+app.get("/", (req, res) => res.send("Lemon Squeezy proxy running"));
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
